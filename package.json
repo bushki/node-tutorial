@@ -8,6 +8,9 @@
   },
   "author": "Luis M",
   "license": "ISC",
+  "dependencies": {
+    "uuid": "^3.3.2"
+  },
   "devDependencies": {
     "nodemon": "^1.99.99"
   }
