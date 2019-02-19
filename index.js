@@ -6,13 +6,54 @@
 // const person1 = new Person('John', 45);
 // person1.greeting();
 
-const Logger = require('./logger');
+// const Logger = require('./logger');
 
-const logger = new Logger();
-logger.on('message', (data) => 
-console.log('Called Listener:',data)
-);
+// const logger = new Logger();
+// logger.on('message', (data) => 
+// console.log('Called Listener:',data)
+// );
 
-logger.log('Hello logger!');
-logger.log('Hi');
-logger.log('Bye');
+// logger.log('Hello logger!');
+// logger.log('Hi');
+// logger.log('Bye');
+
+require('dotenv').load();
+
+const http = require('http');
+const path = require('path');
+const fs = require('fs');
+
+//env 
+const PORT = parseInt(process.env.PORT) || 5000;
+//console.log(PORT);
+console.log(process.env.SOMETHING);
+
+const server = http.createServer((req, res) => {
+    console.log('resp from server');
+    console.log(req.url);
+
+    if(req.url === '/') {
+        //read file
+        fs.readFile(path.join(__dirname, 'public', 'index.html'),
+        (err, content) => {
+            if(err) throw err;
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.end(content);
+        });
+    }
+    if(req.url === '/about') {
+        //read file
+        fs.readFile(path.join(__dirname, 'public', 'about.html'),
+        (err, content) => {
+            if(err) throw err;
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.end(content);
+        });
+    }
+    
+});
+
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+//server.listen(PORT);
